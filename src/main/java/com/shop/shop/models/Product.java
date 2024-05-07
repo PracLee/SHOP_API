@@ -84,4 +84,23 @@ public class Product {
     public ProductOption option(int i) {
         return options.get(i);
     }
+
+    private Product() {
+    }
+
+    public Product(ProductId id,
+                   CategoryId categoryId,
+                   List<Image> images,
+                   String name,
+                   Money price,
+                   List<ProductOption> options,
+                   String description) {
+        this.id = id;
+        this.categoryId = categoryId;
+        this.images = images;
+        this.name = name;
+        this.price = price;
+        this.options = options;
+        this.description = description;
+    }
 }

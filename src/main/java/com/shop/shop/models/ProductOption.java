@@ -43,4 +43,13 @@ public class ProductOption {
     public ProductOptionItem item(int i) {
         return items.get(i);
     }
+
+    private ProductOption() {
+    }
+
+    public ProductOption(ProductOptionId id, String name, List<ProductOptionItem> items) {
+        this.id = id;
+        this.name = name;
+        this.items = items;
+    }
 }

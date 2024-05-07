@@ -1,12 +1,15 @@
 package com.shop.shop.models;
 
 import io.hypersistence.tsid.TSID;
+import jakarta.persistence.Access;
+import jakarta.persistence.AccessType;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 
 import java.util.Objects;
 
 @MappedSuperclass
+@Access(AccessType.FIELD)
 public abstract class EntityId {
     @Column(name = "id")
     private String value;
