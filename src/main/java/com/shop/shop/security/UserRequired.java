@@ -1,4 +1,4 @@
-package com.shop.shop.annotations;
+package com.shop.shop.security;
 
 import org.springframework.security.access.annotation.Secured;
 

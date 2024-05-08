@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.shop.shop.TestUtils.createCartLineItemOption;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -43,12 +42,9 @@ class AddProductToCartServiceTest {
 
     @BeforeEach
     void setUpFixtures() {
-        product = Fixtures.product("맨투맨");
+        product = Fixtures.product("셔츠");
 
-        options = Set.of(
-                createCartLineItemOption(product, 0, 0),
-                createCartLineItemOption(product, 1, 0)
-        );
+        options = Set.of();
 
         quantity = 1;
     }
@@ -70,6 +66,23 @@ class AddProductToCartServiceTest {
                 userId, product.id(), options, quantity);
 
         assertThat(cart.lineItemSize()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("addProductToCart - when has no option")
+    void addProductToCartWithoutOption() {
+        UserId userId = new UserId("USER-ID");
+
+        given(cartRepository.findByUserId(userId))
+                .willReturn(Optional.empty());
+
+        given(productRepository.findById(product.id()))
+                .willReturn(Optional.of(product));
+
+        addProductToCartService.addProductToCart(
+                userId, product.id(), options, quantity);
+
+        verify(cartRepository).save(any(Cart.class));
     }
 
     @Test

@@ -1,10 +1,10 @@
 package com.shop.shop.controllers;
 
-import com.shop.shop.annotations.UserRequired;
 import com.shop.shop.application.AddProductToCartService;
 import com.shop.shop.dtos.AddProductToCartDto;
 import com.shop.shop.models.*;
 import com.shop.shop.security.AuthUser;
+import com.shop.shop.security.UserRequired;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;

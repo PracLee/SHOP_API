@@ -23,7 +23,18 @@ public class Fixtures {
                     ),
                     "편하게 입을 수 있는 맨투맨");
         }
-
+        if (name.equals("셔츠")) {
+            return new Product(
+                    new ProductId("0BV000PRO0002"),
+                    new CategoryId("0BV000CAT0001"),
+                    List.of(
+                            new Image("http://example.com/product-02.jpg")
+                    ),
+                    "셔츠",
+                    new Money(128_000L),
+                    List.of(),
+                    ".");
+        }
         throw new NoSuchElementException("Product - name: " + name);
     }
 

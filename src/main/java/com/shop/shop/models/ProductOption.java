@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "product_options")
@@ -51,5 +52,12 @@ public class ProductOption {
         this.id = id;
         this.name = name;
         this.items = items;
+    }
+
+    public ProductOptionItem itemById(ProductOptionItemId itemId) {
+        return items.stream()
+                .filter(item -> Objects.equals(item.id(), itemId))
+                .findFirst()
+                .orElseThrow();
     }
 }
