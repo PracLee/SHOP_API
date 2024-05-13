@@ -78,4 +78,8 @@ public class Cart {
         CartLineItemId id = CartLineItemId.generate();
         return new CartLineItem(id, product.id(), options, quantity);
     }
+
+    public void clear() {
+        lineItems.clear();
+    }
 }

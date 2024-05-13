@@ -37,4 +37,8 @@ public class Money {
     public Money times(int quantity) {
         return new Money(amount * quantity);
     }
+
+    public Money plus(Money other) {
+        return new Money(amount + other.amount);
+    }
 }
