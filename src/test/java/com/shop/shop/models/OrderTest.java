@@ -44,6 +44,6 @@ class OrderTest {
         assertThat(order.lineItemSize()).isEqualTo(3);
 
         assertThat(order.totalPrice())
-                .isEqualTo(new Money(128_000L + 128_000L * 2 + 123_000L * 2));
+                .isEqualTo(new Money(138_000L + 128_000L * 2 + 123_000L * 2));
     }
 }

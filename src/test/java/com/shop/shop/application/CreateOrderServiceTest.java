@@ -1,6 +1,7 @@
 package com.shop.shop.application;
 
 import com.shop.shop.Fixtures;
+import com.shop.shop.infrastructure.PaymentValidator;
 import com.shop.shop.models.*;
 import com.shop.shop.repositories.CartRepository;
 import com.shop.shop.repositories.OrderRepository;
@@ -21,7 +22,7 @@ class CreateOrderServiceTest {
     private ProductRepository productRepository;
     private CartRepository cartRepository;
     private OrderRepository orderRepository;
-
+    private PaymentValidator paymentValidator;
     private CreateOrderService createOrderService;
 
     private Product product;
@@ -36,9 +37,10 @@ class CreateOrderServiceTest {
         productRepository = mock(ProductRepository.class);
         cartRepository = mock(CartRepository.class);
         orderRepository = mock(OrderRepository.class);
-
+        paymentValidator = mock(PaymentValidator.class);
+        
         createOrderService = new CreateOrderService(
-                productRepository, cartRepository, orderRepository);
+                productRepository, cartRepository, orderRepository, paymentValidator);
     }
 
     @BeforeEach

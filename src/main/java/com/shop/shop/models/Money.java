@@ -41,4 +41,7 @@ public class Money {
     public Money plus(Money other) {
         return new Money(amount + other.amount);
     }
+
+    public static final Money ZERO = new Money(0L);
+
 }
