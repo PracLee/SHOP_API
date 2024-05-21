@@ -33,6 +33,7 @@ public class WebSecurityConfig {
 
         http.authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/session").permitAll()
+                .requestMatchers(HttpMethod.POST, "/admin/session").permitAll()
                 .requestMatchers(HttpMethod.POST, "/users").permitAll()
                 .requestMatchers(HttpMethod.GET, "/categories").permitAll()
                 .requestMatchers(HttpMethod.GET, "/products/**").permitAll()

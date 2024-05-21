@@ -258,18 +258,26 @@ public class BackdoorController {
 
         jdbcTemplate.update("""
                         INSERT INTO categories (
-                            id, name, created_at, updated_at)
-                         VALUES (?, ?, ?, ?)
-                        """.replaceAll("\n", ""),
-                "0BV000CAT0001", "top", now, now
+                            id, name, hidden, created_at, updated_at)
+                        VALUES (?, ?, ?, ?, ?)
+                        """,
+                "0BV000CAT0001", "top", false, now, now
         );
 
         jdbcTemplate.update("""
                         INSERT INTO categories (
-                            id, name, created_at, updated_at)
-                         VALUES (?, ?, ?, ?)
-                        """.replaceAll("\n", ""),
-                "0BV000CAT0002", "outer", now, now
+                            id, name, hidden, created_at, updated_at)
+                        VALUES (?, ?, ?, ?, ?)
+                        """,
+                "0BV000CAT0002", "outer", false, now, now
+        );
+
+        jdbcTemplate.update("""
+                        INSERT INTO categories (
+                            id, name, hidden, created_at, updated_at)
+                        VALUES (?, ?, ?, ?, ?)
+                        """,
+                "0BV000CAT0003", "HIDDEN", true, now, now
         );
     }
 

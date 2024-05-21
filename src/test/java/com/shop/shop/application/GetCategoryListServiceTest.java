@@ -24,12 +24,18 @@ class GetCategoryListServiceTest {
         categoryRepository = mock(CategoryRepository.class);
 
         given(categoryRepository.findAll()).willReturn(List.of(category));
-        
+
         getCategoryListService = new GetCategoryListService(categoryRepository);
     }
 
     @Test
     void list() {
+        CategoryId id = new CategoryId("0BV000CAT0001");
+        Category category = new Category(id, "top");
+
+        given(categoryRepository.findAllByHiddenIsFalseOrderByIdAsc())
+                .willReturn(List.of(category));
+        
         List<Category> categories = getCategoryListService.getCategories();
 
         assertThat(categories).hasSize(1);

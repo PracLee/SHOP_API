@@ -1,7 +1,6 @@
 package com.shop.shop.application;
 
 import com.shop.shop.models.Category;
-import com.shop.shop.models.CategoryId;
 import com.shop.shop.repositories.CategoryRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +15,10 @@ public class GetCategoryListService {
     }
 
     public List<Category> getCategories() {
+        return categoryRepository.findAllByHiddenIsFalseOrderByIdAsc();
+    }
 
-        CategoryId id = new CategoryId("test");
-        Category category = new Category(id, "top");
-        return List.of(category);
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAllByOrderByIdAsc();
     }
 }
