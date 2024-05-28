@@ -42,4 +42,8 @@ public class Payment {
     public int hashCode() {
         return Objects.hash(merchantId, transactionId);
     }
+
+    public String merchantId() {
+        return merchantId;
+    }
 }

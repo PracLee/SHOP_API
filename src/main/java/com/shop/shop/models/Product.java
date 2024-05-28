@@ -1,5 +1,6 @@
 package com.shop.shop.models;
 
+import com.shop.shop.dtos.AdminUpdateProductDto;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -45,6 +46,9 @@ public class Product {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @Column(name = "hidden")
+    private boolean hidden;
 
     public ProductId id() {
         return id;
@@ -98,10 +102,10 @@ public class Product {
                    String description) {
         this.id = id;
         this.categoryId = categoryId;
-        this.images = images;
+        this.images = new ArrayList<>(images);
         this.name = name;
         this.price = price;
-        this.options = options;
+        this.options = new ArrayList<>(options);
         this.description = description;
     }
 
@@ -110,5 +114,78 @@ public class Product {
                 .filter(option -> Objects.equals(option.id(), optionId))
                 .findFirst()
                 .orElseThrow();
+    }
+
+    public boolean hidden() {
+        return hidden;
+    }
+
+    public int imageSize() {
+        return images.size();
+    }
+
+    public void update(AdminUpdateProductDto productDto) {
+        this.categoryId = new CategoryId(productDto.categoryId());
+
+        updateImages(productDto.images());
+
+        this.name = productDto.name();
+
+        this.price = new Money(productDto.price());
+
+        updateOptions(productDto.options());
+
+        this.description = productDto.description();
+
+        this.hidden = productDto.hidden();
+    }
+
+    private void updateImages(List<AdminUpdateProductDto.ImageDto> images) {
+        this.images.removeIf(image -> {
+            String imageId = image.id().toString();
+            return images.stream().noneMatch(i -> imageId.equals(i.id()));
+        });
+
+        images.forEach(image -> {
+            if (image.id() == null) {
+                this.images.add(new Image(
+                        ImageId.generate(),
+                        image.url()
+                ));
+                return;
+            }
+            this.images.stream()
+                    .filter(i -> i.id().toString().equals(image.id()))
+                    .forEach(i -> i.changeUrl(image.url()));
+        });
+    }
+
+    private void updateOptions(List<AdminUpdateProductDto.OptionDto> options) {
+        this.options.removeIf(option -> {
+            String optionId = option.id().toString();
+            return options.stream().noneMatch(i -> optionId.equals(i.id()));
+        });
+
+        options.forEach(option -> {
+            if (option.id() == null) {
+                this.options.add(new ProductOption(
+                        ProductOptionId.generate(),
+                        option.name(),
+                        option.items().stream()
+                                .map(item -> new ProductOptionItem(
+                                        ProductOptionItemId.generate(),
+                                        item.name()
+                                ))
+                                .toList()
+                ));
+                return;
+            }
+            this.options.stream()
+                    .filter(i -> i.id().toString().equals(option.id()))
+                    .forEach(i -> {
+                        i.changeName(option.name());
+                        i.updateItems(option.items());
+                    });
+        });
     }
 }

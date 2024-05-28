@@ -28,7 +28,20 @@ public class Image {
         this.url = url;
     }
 
+    public Image(ImageId id, String url) {
+        this.id = id;
+        this.url = url;
+    }
+
     public String url() {
         return url;
+    }
+
+    public ImageId id() {
+        return id;
+    }
+
+    public void changeUrl(String url) {
+        this.url = url;
     }
 }

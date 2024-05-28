@@ -11,5 +11,8 @@ import java.util.Optional;
 public interface OrderRepository extends CrudRepository<Order, OrderId> {
     List<Order> findAllByUserIdOrderByIdDesc(UserId userId);
 
+    List<Order> findAllByOrderByIdDesc();
+
     Optional<Order> findByIdAndUserId(OrderId orderId, UserId userId);
+
 }

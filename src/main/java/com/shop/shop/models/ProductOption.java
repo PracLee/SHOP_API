@@ -1,5 +1,6 @@
 package com.shop.shop.models;
 
+import com.shop.shop.dtos.AdminUpdateProductDto;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -51,7 +52,7 @@ public class ProductOption {
     public ProductOption(ProductOptionId id, String name, List<ProductOptionItem> items) {
         this.id = id;
         this.name = name;
-        this.items = items;
+        this.items = new ArrayList<>(items);
     }
 
     public ProductOptionItem itemById(ProductOptionItemId itemId) {
@@ -59,5 +60,29 @@ public class ProductOption {
                 .filter(item -> Objects.equals(item.id(), itemId))
                 .findFirst()
                 .orElseThrow();
+    }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
+    public void updateItems(List<AdminUpdateProductDto.OptionItemDto> items) {
+        this.items.removeIf(item -> {
+            String itemId = item.id().toString();
+            return items.stream().noneMatch(i -> itemId.equals(i.id()));
+        });
+
+        items.forEach(item -> {
+            if (item.id() == null) {
+                this.items.add(new ProductOptionItem(
+                        ProductOptionItemId.generate(),
+                        item.name()
+                ));
+                return;
+            }
+            this.items.stream()
+                    .filter(i -> i.id().toString().equals(item.id()))
+                    .forEach(i -> i.changeName(item.name()));
+        });
     }
 }

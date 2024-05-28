@@ -100,4 +100,20 @@ public class Order {
     public LocalDateTime orderedAt() {
         return orderedAt;
     }
+
+    public UserId userId() {
+        return userId;
+    }
+
+    public Receiver receiver() {
+        return receiver;
+    }
+
+    public Payment payment() {
+        return payment;
+    }
+
+    public void changeStatus(OrderStatus status) {
+        this.status = status;
+    }
 }

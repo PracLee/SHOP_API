@@ -9,7 +9,13 @@ import java.util.List;
 
 
 public interface ProductRepository extends CrudRepository<Product, ProductId> {
-    public List<Product> findAll();
+    List<Product> findAll();
 
     List<Product> findAllByCategoryId(CategoryId categoryId);
+
+    List<Product> findAllByHiddenIsFalseOrderByIdAsc();
+
+    List<Product> findAllByCategoryIdAndHiddenIsFalseOrderByIdAsc(CategoryId id);
+
+    List<Product> findAllByOrderByIdAsc();
 }
